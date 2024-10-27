@@ -1,18 +1,26 @@
 import { configTheme } from './theme';
 import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
-import { ApolloProvider } from '@apollo/client';
-import { PlayerScreen } from './screens/PlayerScreen';
-import { client } from './screens/SongsScreen';
-import { KTabNavigator } from './components/KTabNavigator';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { PlayerScreen } from './src/screens/PlayerScreen';
+import { KTabNavigator } from './src/components/KTabNavigator';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { LandingScreen } from './screens/LandingScreen';
+import { LandingScreen } from './src/screens/LandingScreen';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
+import { BASE_URL } from './src/constants/api';
+import { LogBox } from 'react-native';
 
 configTheme();
 
+LogBox.ignoreAllLogs(); // old techs, would this app be in prod, warnings would be solved
+
 const Stack = createNativeStackNavigator();
+
+export const client = new ApolloClient({
+  uri: `${BASE_URL}/graphql`,
+  cache: new InMemoryCache(),
+});
 
 export default function App() {
   const [loaded] = useFonts({

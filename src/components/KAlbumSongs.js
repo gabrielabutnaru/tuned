@@ -2,6 +2,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Colors, Image, Text, View } from 'react-native-ui-lib';
 import { KSpacer } from './KSpaces';
 import { FlatList } from 'react-native';
+import { BASE_URL } from '../constants/api';
 
 export const KAlbumSongs = ({ title, cover, artist, songs }) => {
   return (
@@ -12,7 +13,7 @@ export const KAlbumSongs = ({ title, cover, artist, songs }) => {
           width={200}
           height={200}
           source={{
-            uri: `http://10.0.2.2:1337${cover.data.attributes.url}`,
+            uri: `${BASE_URL}${cover.data.attributes.url}`,
           }}
           style={{ borderRadius: 100 }}
         />

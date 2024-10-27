@@ -2,6 +2,8 @@ import { Colors, Text, View } from 'react-native-ui-lib';
 import { Image } from 'react-native-ui-lib';
 import { LinearGradient } from 'expo-linear-gradient';
 import { KSpacer } from './KSpaces';
+import { BASE_URL } from '../constants/api';
+
 export const KArtistInfo = ({ name, avatar, birth_name, birth_place, birthday, albums }) => {
   const calculate_age = dob1 => {
     let today = new Date();
@@ -24,7 +26,7 @@ export const KArtistInfo = ({ name, avatar, birth_name, birth_place, birthday, a
           width={200}
           height={200}
           source={{
-            uri: `http://10.0.2.2:1337${avatar.data.attributes.url}`,
+            uri: `${BASE_URL}${avatar.data.attributes.url}`,
           }}
           style={{ borderRadius: 100 }}
         />

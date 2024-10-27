@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { Image, Text, TouchableOpacity, View } from 'react-native-ui-lib';
 import { KSpacer } from './KSpaces';
+import { BASE_URL } from '../constants/api';
 
 export const KSongTile = ({ song }) => {
   const navigation = useNavigation();
@@ -20,7 +21,7 @@ export const KSongTile = ({ song }) => {
               width={80}
               height={80}
               source={{
-                uri: `http://10.0.2.2:1337${album.data.attributes.cover.data.attributes.url}`,
+                uri: `${BASE_URL}${album.data.attributes.cover.data.attributes.url}`,
               }}
               style={{ borderRadius: 100 }}
             />

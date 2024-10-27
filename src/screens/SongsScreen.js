@@ -1,14 +1,9 @@
-import { ApolloClient, gql, InMemoryCache, useQuery } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 import { Colors, Text } from 'react-native-ui-lib';
 import { FlatList } from 'react-native';
 import { KSongTile } from '../components/KSongTile';
 import { KSpacer } from '../components/KSpaces';
 import { LinearGradient } from 'expo-linear-gradient';
-
-export const client = new ApolloClient({
-  uri: 'http://10.0.2.2:1337/graphql',
-  cache: new InMemoryCache(),
-});
 
 const ALL_SONGS_QUERY = gql`
   query GetAllSongs {

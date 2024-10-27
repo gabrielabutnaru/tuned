@@ -5,7 +5,7 @@ import { Image } from 'react-native-ui-lib';
 export const LandingScreen = ({ navigation }) => {
   return (
     <View bg-violet flex center>
-      <Image width={200} height={200} source={require('../assets/music.png')} />
+      <Image width={200} height={200} source={require('../../assets/music.png')} />
       <KSpacer hei={30} />
       <View width={300}>
         <Text center white xxxl megan>

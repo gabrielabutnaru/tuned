@@ -3,42 +3,37 @@ import { Colors, Text } from 'react-native-ui-lib';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FlatList } from 'react-native';
 import { KSpacer } from '../components/KSpaces';
-import { KArtistTile } from '../components/KArtistTile';
-import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { KAlbumTile } from '../components/KAlbumTile';
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { KArtistInfo } from '../components/KArtistInfo';
+import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { KAlbumSongs } from '../components/KAlbumSongs';
 
-const ALL_ARTISTS_QUERY = gql`
-  query GetAllArtists {
-    artists {
+const ALL_ALBUMS_QUERY = gql`
+  query GetAllAlbums {
+    albums {
       data {
         id
         attributes {
-          name
-          avatar {
+          title
+          cover {
             data {
               attributes {
                 url
               }
-              id
             }
           }
-          birth_name
-          birth_place
-          birthday
-          albums {
+          artist {
+            data {
+              attributes {
+                name
+              }
+            }
+          }
+          songs {
             data {
               id
               attributes {
                 title
-                cover {
-                  data {
-                    id
-                    attributes {
-                      url
-                    }
-                  }
-                }
               }
             }
           }
@@ -47,19 +42,18 @@ const ALL_ARTISTS_QUERY = gql`
     }
   }
 `;
-
-export const ArtistsScreen = () => {
+export const AlbumsScreen = () => {
   const bottomSheetRef = useRef(null);
 
   const snapPoints = useMemo(() => ['45%', '90%'], []);
 
-  const handleSheetChanges = useCallback((index: number) => {
+  const handleSheetChanges = useCallback((index) => {
     console.log('handleSheetChanges', index);
   }, []);
 
-  const [artistDataModal, setArtistDataModal] = useState(null);
+  const [albumDataModal, setAlbumDataModal] = useState(null);
 
-  const { data, loading, error } = useQuery(ALL_ARTISTS_QUERY);
+  const { data, loading, error } = useQuery(ALL_ALBUMS_QUERY);
 
   if (error) console.log(error);
 
@@ -68,10 +62,9 @@ export const ArtistsScreen = () => {
   }
 
   const openModal = item => {
-    setArtistDataModal(item);
+    setAlbumDataModal(item);
     bottomSheetRef.current.present();
   };
-
   return (
     <LinearGradient
       colors={[Colors.violet, '#6f04f1', Colors.violet]}
@@ -80,10 +73,10 @@ export const ArtistsScreen = () => {
       <BottomSheetModalProvider>
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={data.artists.data}
+          data={data.albums.data}
           keyExtractor={({ id }) => id}
           renderItem={({ item }) => (
-            <KArtistTile artist={item.attributes} onPress={() => openModal(item.attributes)} />
+            <KAlbumTile album={item.attributes} onPress={() => openModal(item.attributes)} />
           )}
           ItemSeparatorComponent={KSpacer({ wid: 1000, hei: 1, bg: Colors.white })}
         />
@@ -99,7 +92,7 @@ export const ArtistsScreen = () => {
           snapPoints={snapPoints}
           onChange={handleSheetChanges}
         >
-          <KArtistInfo {...artistDataModal} />
+          <KAlbumSongs {...albumDataModal} />
         </BottomSheetModal>
       </BottomSheetModalProvider>
     </LinearGradient>

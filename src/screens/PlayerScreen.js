@@ -4,6 +4,8 @@ import { Audio } from 'expo-av';
 import { KSpacer } from '../components/KSpaces';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useEffect, useState } from 'react';
+import { BASE_URL } from '../constants/api';
+
 export const PlayerScreen = ({ route, navigation }) => {
   const { song } = route.params;
   const { title, album, artist, mp3, featurings } = song;
@@ -14,7 +16,7 @@ export const PlayerScreen = ({ route, navigation }) => {
   useEffect(() => {
     const s = new Audio.Sound();
     const loadSound = async () => {
-      await s.loadAsync({ uri: `http://10.0.2.2:1337${mp3.data.attributes.url}` });
+      await s.loadAsync({ uri: `${BASE_URL}${mp3.data.attributes.url}` });
       setIsLoading(false);
       setSound(s);
     };
@@ -38,7 +40,7 @@ export const PlayerScreen = ({ route, navigation }) => {
               navigation.navigate('SongsScreen');
             }}
           >
-            <Image source={require('../assets/angle-left.png')} />
+            <Image source={require('../../assets/angle-left.png')} />
           </TouchableOpacity>
         </View>
         <View flex centerH>
@@ -47,7 +49,7 @@ export const PlayerScreen = ({ route, navigation }) => {
               width={214}
               height={214}
               source={{
-                uri: `http://10.0.2.2:1337${album.data.attributes.cover.data.attributes.url}`,
+                uri: `${BASE_URL}${album.data.attributes.cover.data.attributes.url}`,
               }}
               style={{ borderRadius: 160 }}
             />
@@ -103,9 +105,9 @@ export const PlayerScreen = ({ route, navigation }) => {
                   }}
                 >
                   {isPlaying ? (
-                    <Image source={require('../assets/playTrue.png')} />
+                    <Image source={require('../../assets/playTrue.png')} />
                   ) : (
-                    <Image source={require('../assets/playFalse.png')} />
+                    <Image source={require('../../assets/playFalse.png')} />
                   )}
                 </TouchableOpacity>
                 <KSpacer />
@@ -116,7 +118,7 @@ export const PlayerScreen = ({ route, navigation }) => {
                     setIsPlaying(false);
                   }}
                 >
-                  <Image source={require('../assets/pause.png')} />
+                  <Image source={require('../../assets/pause.png')} />
                 </TouchableOpacity>
               </View>
             )}
