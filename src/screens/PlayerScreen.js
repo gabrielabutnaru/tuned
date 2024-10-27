@@ -39,6 +39,7 @@ export const PlayerScreen = ({ route, navigation }) => {
             onPress={() => {
               navigation.navigate('SongsScreen');
             }}
+            hitSlop={10}
           >
             <Image source={require('../../assets/angle-left.png')} />
           </TouchableOpacity>
